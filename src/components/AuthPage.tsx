@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthForm from './AuthForm';
 import { login } from '../service/authService';
+import useRedirectIfLoggedIn from '../hooks/useRedirectIfLoggedIn';
 
 interface Props {
   type: 'signin' | 'signup';
 }
 
 const AuthPage: React.FC<Props> = ({ type }) => {
+  useRedirectIfLoggedIn();
+
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
@@ -40,7 +43,7 @@ const AuthPage: React.FC<Props> = ({ type }) => {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">
       <AuthForm title={type === 'signin' ? 'Sign In' : 'Sign Up'} onSubmit={handleSubmit} />
-      {/* {userName && <div>Welcome, {userName}!</div>} */}
+      {userName && <div>Welcome, {userName}!</div>}
     </div>
   );
 };
