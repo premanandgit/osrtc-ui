@@ -11,10 +11,16 @@ interface DepotData {
 
 async function addDepot(data: DepotData): Promise<any> {
     try {
+        const token = getToken();
+        if (!token) {
+            throw new Error('No token found');
+        }
+
         const response = await fetch(`${BASE_URL}/depots`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(data),
         });
