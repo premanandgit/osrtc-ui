@@ -11,10 +11,34 @@ enum LedTypes {
 }
 
 interface BusFormData {
+  _id: string;
   registrationNumber: string;
   routeNo: string;
   ledType: LedTypes;
   depotId: string;
+}
+
+async function fetchBuses(): Promise<BusFormData[]> {
+  try {
+
+      const token = getToken();
+      if (!token) {
+          throw new Error('No token found');
+      }
+
+      const response = await fetch(`${BASE_URL}/buses`, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+      });
+      if (!response.ok) {
+          throw new Error('Failed to fetch buses');
+      }
+      return await response.json();
+  } catch (error) {
+      console.error('API Error:', error);
+      throw error;
+  }
 }
 
 async function addBus(data: BusFormData): Promise<any> {
@@ -44,4 +68,4 @@ async function addBus(data: BusFormData): Promise<any> {
 
 // Add other API functions as needed
 
-export { addBus };
+export { addBus, fetchBuses };

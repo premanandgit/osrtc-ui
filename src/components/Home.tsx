@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import useAuthRedirect from '../hooks/useAuthRedirect';
 import DepotForm from './DepotForm';
 import BusForm from './BusForm';
+import DepotsList from './Depots';
+import BusesList from './Buses';
 
 const Home = () => {
   useAuthRedirect();
@@ -23,6 +25,8 @@ const Home = () => {
       {/* Other content of the home page */}
       <DepotForm></DepotForm>
       <BusForm></BusForm>
+      <DepotsList></DepotsList>
+      <BusesList></BusesList>
     </div>
   );
 };
