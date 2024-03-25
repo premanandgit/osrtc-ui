@@ -1,3 +1,5 @@
+import { getToken } from "./utils";
+
 // apiService.ts
 const BASE_URL = 'http://localhost:3000/api'; // Assumes your Express API is served from the same origin
 
@@ -17,10 +19,16 @@ interface BusFormData {
 
 async function addBus(data: BusFormData): Promise<any> {
   try {
+    const token = getToken();
+    if (!token) {
+        throw new Error('No token found');
+    }
+
     const response = await fetch(`${BASE_URL}/buses`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     });
